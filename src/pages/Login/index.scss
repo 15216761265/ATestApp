@@ -1,4 +1,8 @@
 .loginPageLayout {
   width: 55vw;
+  height: 100vh;
   margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

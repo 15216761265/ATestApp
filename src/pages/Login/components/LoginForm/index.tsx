@@ -1,22 +1,23 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
 import { LoginFormType } from '../../helper/LoginTypes';
 import './index.scss';
 
 const allLayout = {
   wrapperCol: { span: 16 },
-  labelCol: { span: 8 }
+  labelCol: { span: 5 }
 };
+
 const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 }
+  wrapperCol: { offset: 5, span: 20 }
 };
 
-const LoginForm: React.FC = () => {
-  const [form] = Form.useForm();
+type LoginFormProp = {
+  finishForm: (params: LoginFormType) => void;
+};
 
-  const handleFinishForm = (values: LoginFormType) => {
-    console.log(111111, values);
-  };
+const LoginForm: React.FC<LoginFormProp> = ({ finishForm }) => {
+  const [form] = Form.useForm();
 
   const handleResetForm = () => {
     form.resetFields();
@@ -24,7 +25,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="loginForm">
-      <Form onFinish={handleFinishForm} {...allLayout} initialValues={{ remember: true }}>
+      <Form onFinish={finishForm} {...allLayout} initialValues={{ remember: true }}>
         <Form.Item
           label="Username"
           name="userName"
@@ -39,14 +40,32 @@ const LoginForm: React.FC = () => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+        <Row>
+          <Col offset={5}>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              {' '}
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+          </Col>
+          <Col>
+            <a className="login-form-forgot" href="">
+              Forgot password
+            </a>
+          </Col>
+        </Row>
+
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            className="myAppBtnNormalStyle loginFormSubmitBtn"
+          >
             Submit
           </Button>
-          <Button onClick={handleResetForm}>Reset</Button>
+          <Button onClick={handleResetForm} size="large" className="myAppBtnNormalStyle">
+            Reset
+          </Button>
         </Form.Item>
       </Form>
     </div>
